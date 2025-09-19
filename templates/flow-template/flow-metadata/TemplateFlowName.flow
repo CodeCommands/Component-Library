@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Template Flow Definition File
+    
+    This is a sample flow definition that demonstrates common flow patterns.
+    Replace with your actual flow logic and rename file to match your flow name.
+    
+    File naming convention: [Flow_Name].flow
+    Example: Account_Data_Sync.flow
+-->
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    
+    <!-- Flow Metadata -->
+    <apiVersion>58.0</apiVersion>
+    <description>Template flow demonstrating common patterns and best practices for reusable flows in the component library.</description>
+    <label>Template Flow Name</label>
+    
+    <!-- Flow Type: Screen, AutoLaunch, RecordTrigger, ScheduleTrigger, PlatformEventTrigger -->
+    <processType>AutoLaunchedFlow</processType>
+    
+    <!-- Status: Active, Draft, Obsolete -->
+    <status>Draft</status>
+    
+    <!-- Variables -->
+    <variables>
+        <!-- Input Variable Example -->
+        <name>var_InputRecordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
+    
+    <variables>
+        <!-- Output Variable Example -->
+        <name>var_ProcessingResult</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <stringValue>Success</stringValue>
+        </value>
+    </variables>
+    
+    <variables>
+        <!-- Collection Variable Example -->
+        <name>var_RecordCollection</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account</objectType>
+    </variables>
+    
+    <!-- Constants -->
+    <constants>
+        <name>const_MaxRetries</name>
+        <dataType>Number</dataType>
+        <value>
+            <numberValue>3.0</numberValue>
+        </value>
+    </constants>
+    
+    <constants>
+        <name>const_EmailTemplate</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Template_Notification</stringValue>
+        </value>
+    </constants>
+    
+    <!-- Start Element -->
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>GetRecord</targetReference>
+        </connector>
+    </start>
+    
+    <!-- Record Lookup Element -->
+    <recordLookups>
+        <name>GetRecord</name>
+        <label>Get Record</label>
+        <locationX>50</locationX>
+        <locationY>158</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>ValidateRecord</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>var_InputRecordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <queriedFields>Type</queriedFields>
+        <queriedFields>AnnualRevenue</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    
+    <!-- Decision Element -->
+    <decisions>
+        <name>ValidateRecord</name>
+        <label>Validate Record</label>
+        <locationX>50</locationX>
+        <locationY>278</locationY>
+        <defaultConnectorLabel>Invalid Record</defaultConnectorLabel>
+        <rules>
+            <name>ValidRecord</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetRecord.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetRecord.Name</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>ProcessRecord</targetReference>
+            </connector>
+            <label>Valid Record</label>
+        </rules>
+        <connector>
+            <targetReference>HandleError</targetReference>
+        </connector>
+    </decisions>
+    
+    <!-- Assignment Element -->
+    <assignments>
+        <name>ProcessRecord</name>
+        <label>Process Record</label>
+        <locationX>50</locationX>
+        <locationY>398</locationY>
+        <assignmentItems>
+            <assignToReference>var_ProcessingResult</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Record processed successfully</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>UpdateRecord</targetReference>
+        </connector>
+    </assignments>
+    
+    <!-- Record Update Element -->
+    <recordUpdates>
+        <name>UpdateRecord</name>
+        <label>Update Record</label>
+        <locationX>50</locationX>
+        <locationY>518</locationY>
+        <connector>
+            <targetReference>SendNotification</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Description</field>
+            <value>
+                <stringValue>Processed by Flow</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>GetRecord</inputReference>
+    </recordUpdates>
+    
+    <!-- Email Alert / Action -->
+    <actionCalls>
+        <name>SendNotification</name>
+        <label>Send Notification</label>
+        <locationX>50</locationX>
+        <locationY>638</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <connector>
+            <targetReference>EndSuccess</targetReference>
+        </connector>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <stringValue>Record Processing Complete</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <stringValue>The record has been processed successfully.</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <stringValue>admin@company.com</stringValue>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    
+    <!-- Error Handling Assignment -->
+    <assignments>
+        <name>HandleError</name>
+        <label>Handle Error</label>
+        <locationX>314</locationX>
+        <locationY>398</locationY>
+        <assignmentItems>
+            <assignToReference>var_ProcessingResult</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Error: Invalid or missing record data</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>LogError</targetReference>
+        </connector>
+    </assignments>
+    
+    <!-- Error Logging -->
+    <recordCreates>
+        <name>LogError</name>
+        <label>Log Error</label>
+        <locationX>314</locationX>
+        <locationY>518</locationY>
+        <connector>
+            <targetReference>EndError</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Subject</field>
+            <value>
+                <stringValue>Flow Processing Error</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Description</field>
+            <value>
+                <elementReference>var_ProcessingResult</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Priority</field>
+            <value>
+                <stringValue>High</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>New</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    
+    <!-- End Elements -->
+    <!-- Success End -->
+    <start>
+        <locationX>50</locationX>
+        <locationY>758</locationY>
+        <connector>
+            <targetReference>EndSuccess</targetReference>
+        </connector>
+    </start>
+    
+    <!-- Error End -->
+    <start>
+        <locationX>314</locationX>
+        <locationY>638</locationY>
+        <connector>
+            <targetReference>EndError</targetReference>
+        </connector>
+    </start>
+    
+</Flow>

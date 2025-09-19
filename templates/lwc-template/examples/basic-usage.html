@@ -1,0 +1,28 @@
+<!--
+    Basic Usage Example for Lightning Web Component
+    
+    This example shows the simplest way to use the component
+    with minimal configuration.
+-->
+
+<!-- Example 1: Basic Usage -->
+<template>
+    <div class="slds-p-around_medium">
+        <h2 class="slds-text-heading_medium slds-m-bottom_medium">Basic Usage Example</h2>
+        
+        <!-- Minimal implementation with default values -->
+        <c-component-name
+            title="Basic Component"
+            show-header={true}>
+        </c-component-name>
+    </div>
+</template>
+
+<!-- JavaScript for Basic Example -->
+<script>
+import { LightningElement } from 'lwc';
+
+export default class BasicUsageExample extends LightningElement {
+    // No additional JavaScript needed for basic usage
+}
+</script>

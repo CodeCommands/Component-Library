@@ -1,0 +1,258 @@
+{
+  "description": "Sample data for testing the component",
+  "version": "1.0.0",
+  "lastUpdated": "2025-09-19",
+  "testScenarios": {
+    "basicData": {
+      "title": "Basic Test Data",
+      "items": [
+        {
+          "id": "1",
+          "label": "Sample Item 1",
+          "description": "This is a sample item for basic testing",
+          "category": "test",
+          "isActive": true,
+          "priority": "high",
+          "createdDate": "2025-09-19T10:00:00Z"
+        },
+        {
+          "id": "2", 
+          "label": "Sample Item 2",
+          "description": "This is another sample item for basic testing",
+          "category": "demo",
+          "isActive": false,
+          "priority": "medium",
+          "createdDate": "2025-09-19T10:15:00Z"
+        },
+        {
+          "id": "3",
+          "label": "Sample Item 3", 
+          "description": "This is a third sample item for basic testing",
+          "category": "test",
+          "isActive": true,
+          "priority": "low",
+          "createdDate": "2025-09-19T10:30:00Z"
+        }
+      ]
+    },
+    "complexData": {
+      "title": "Complex Test Data",
+      "metadata": {
+        "totalRecords": 5,
+        "lastSync": "2025-09-19T12:00:00Z",
+        "dataSource": "Salesforce API",
+        "version": "2.1"
+      },
+      "items": [
+        {
+          "id": "comp_1",
+          "label": "Complex Item Alpha",
+          "description": "This item has complex nested data structures and relationships",
+          "category": "advanced",
+          "isActive": true,
+          "priority": "critical",
+          "createdDate": "2025-09-15T08:00:00Z",
+          "lastModified": "2025-09-19T11:45:00Z",
+          "tags": ["complex", "nested", "relationships"],
+          "metadata": {
+            "source": "external-api",
+            "confidence": 0.95,
+            "validationRules": ["required", "format-check", "business-rules"]
+          },
+          "relationships": {
+            "parentId": null,
+            "childrenIds": ["comp_2", "comp_3"],
+            "relatedItems": [
+              {
+                "type": "dependency",
+                "targetId": "dep_1",
+                "strength": "strong"
+              }
+            ]
+          },
+          "customFields": {
+            "field1": "Custom Value 1",
+            "field2": 42,
+            "field3": true,
+            "field4": {
+              "nestedProperty": "Nested Value",
+              "nestedArray": [1, 2, 3, 4, 5]
+            }
+          }
+        },
+        {
+          "id": "comp_2",
+          "label": "Complex Item Beta",
+          "description": "Second complex item with different data patterns",
+          "category": "advanced",
+          "isActive": false,
+          "priority": "high",
+          "createdDate": "2025-09-16T09:30:00Z",
+          "lastModified": "2025-09-19T10:20:00Z",
+          "tags": ["complex", "patterns", "data-heavy"],
+          "metadata": {
+            "source": "manual-entry",
+            "confidence": 0.87,
+            "validationRules": ["required", "custom-validation"]
+          },
+          "relationships": {
+            "parentId": "comp_1",
+            "childrenIds": [],
+            "relatedItems": []
+          },
+          "customFields": {
+            "field1": "Different Value",
+            "field2": 73,
+            "field3": false,
+            "field4": {
+              "nestedProperty": "Another Nested Value",
+              "nestedArray": [10, 20, 30]
+            }
+          }
+        }
+      ]
+    },
+    "edgeCases": {
+      "title": "Edge Case Test Data",
+      "scenarios": [
+        {
+          "name": "Empty Data",
+          "description": "Testing with no data",
+          "data": {
+            "items": []
+          }
+        },
+        {
+          "name": "Null Values",
+          "description": "Testing with null and undefined values",
+          "data": {
+            "items": [
+              {
+                "id": "null_test",
+                "label": null,
+                "description": null,
+                "category": "",
+                "isActive": null,
+                "priority": "",
+                "createdDate": null
+              }
+            ]
+          }
+        },
+        {
+          "name": "Long Text",
+          "description": "Testing with very long text values",
+          "data": {
+            "items": [
+              {
+                "id": "long_text",
+                "label": "This is an extremely long label that might cause display issues if not handled properly by the component rendering logic and CSS styling rules",
+                "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
+                "category": "long-text-test",
+                "isActive": true,
+                "priority": "testing-very-long-priority-value-that-exceeds-normal-expectations",
+                "createdDate": "2025-09-19T15:00:00Z"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Special Characters",
+          "description": "Testing with special characters and unicode",
+          "data": {
+            "items": [
+              {
+                "id": "special_chars",
+                "label": "Special Chars: !@#$%^&*()_+-=[]{}|;:'\",.<>?`~",
+                "description": "Unicode test: 日本語 العربية Русский Français Español 中文 한국어 हिन्दी",
+                "category": "unicode-émojis-🚀🎉💡",
+                "isActive": true,
+                "priority": "høy-prioritét",
+                "createdDate": "2025-09-19T16:00:00Z"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Large Dataset",
+          "description": "Testing with many items",
+          "data": {
+            "items": [
+              {
+                "id": "bulk_1",
+                "label": "Bulk Item 1",
+                "description": "Generated item number 1 for bulk testing",
+                "category": "category1",
+                "isActive": true,
+                "priority": "high",
+                "createdDate": "2025-09-19T10:00:00Z"
+              },
+              {
+                "id": "bulk_2",
+                "label": "Bulk Item 2",
+                "description": "Generated item number 2 for bulk testing",
+                "category": "category2",
+                "isActive": false,
+                "priority": "medium",
+                "createdDate": "2025-09-19T10:01:00Z"
+              },
+              {
+                "id": "bulk_3",
+                "label": "Bulk Item 3",
+                "description": "Generated item number 3 for bulk testing",
+                "category": "category3",
+                "isActive": true,
+                "priority": "low",
+                "createdDate": "2025-09-19T10:02:00Z"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "configuration": {
+    "testModes": {
+      "development": {
+        "enableLogging": true,
+        "showDebugInfo": true,
+        "mockApiCalls": true,
+        "delaySimulation": 1000
+      },
+      "testing": {
+        "enableLogging": false,
+        "showDebugInfo": false,
+        "mockApiCalls": true,
+        "delaySimulation": 500
+      },
+      "production": {
+        "enableLogging": false,
+        "showDebugInfo": false,
+        "mockApiCalls": false,
+        "delaySimulation": 0
+      }
+    },
+    "apiEndpoints": {
+      "development": "https://dev-api.example.com",
+      "testing": "https://test-api.example.com", 
+      "production": "https://api.example.com"
+    }
+  },
+  "usage": {
+    "instructions": "This file contains sample data for testing the component in different scenarios. Use the appropriate test scenario based on what you want to validate.",
+    "examples": [
+      {
+        "scenario": "Basic functionality testing",
+        "use": "testScenarios.basicData"
+      },
+      {
+        "scenario": "Complex data structure testing",
+        "use": "testScenarios.complexData"
+      },
+      {
+        "scenario": "Edge case and error handling testing",
+        "use": "testScenarios.edgeCases"
+      }
+    ]
+  }
+}

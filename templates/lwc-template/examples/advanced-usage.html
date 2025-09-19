@@ -1,0 +1,311 @@
+<!--
+    Advanced Usage Example for Lightning Web Component
+    
+    This example shows advanced usage with all properties,
+    event handling, and complex scenarios.
+-->
+
+<template>
+    <div class="slds-p-around_medium">
+        <h2 class="slds-text-heading_medium slds-m-bottom_medium">Advanced Usage Example</h2>
+        
+        <!-- Advanced implementation with all properties and event handlers -->
+        <c-component-name
+            title={componentTitle}
+            show-header={showHeader}
+            show-footer={showFooter}
+            show-input={showInput}
+            show-actions={showActions}
+            footer-text={footerText}
+            oninputchange={handleInputChange}
+            onprimaryaction={handlePrimaryAction}
+            onsecondaryaction={handleSecondaryAction}
+            onerror={handleComponentError}>
+        </c-component-name>
+
+        <!-- Control Panel for Testing -->
+        <div class="slds-card slds-m-top_large">
+            <div class="slds-card__header">
+                <h3 class="slds-card__header-title">Component Controls</h3>
+            </div>
+            <div class="slds-card__body slds-p-horizontal_medium">
+                
+                <!-- Configuration Controls -->
+                <div class="slds-grid slds-wrap slds-gutters">
+                    
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input
+                            label="Component Title"
+                            value={componentTitle}
+                            onchange={handleTitleChange}>
+                        </lightning-input>
+                    </div>
+                    
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input
+                            label="Footer Text"
+                            value={footerText}
+                            onchange={handleFooterTextChange}>
+                        </lightning-input>
+                    </div>
+                    
+                </div>
+
+                <!-- Boolean Controls -->
+                <div class="slds-grid slds-wrap slds-gutters slds-m-top_medium">
+                    
+                    <div class="slds-col slds-size_1-of-4">
+                        <lightning-input
+                            type="checkbox"
+                            label="Show Header"
+                            checked={showHeader}
+                            onchange={handleShowHeaderChange}>
+                        </lightning-input>
+                    </div>
+                    
+                    <div class="slds-col slds-size_1-of-4">
+                        <lightning-input
+                            type="checkbox"
+                            label="Show Footer"
+                            checked={showFooter}
+                            onchange={handleShowFooterChange}>
+                        </lightning-input>
+                    </div>
+                    
+                    <div class="slds-col slds-size_1-of-4">
+                        <lightning-input
+                            type="checkbox"
+                            label="Show Input"
+                            checked={showInput}
+                            onchange={handleShowInputChange}>
+                        </lightning-input>
+                    </div>
+                    
+                    <div class="slds-col slds-size_1-of-4">
+                        <lightning-input
+                            type="checkbox"
+                            label="Show Actions"
+                            checked={showActions}
+                            onchange={handleShowActionsChange}>
+                        </lightning-input>
+                    </div>
+                    
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="slds-m-top_medium">
+                    <lightning-button
+                        label="Reset Component"
+                        variant="neutral"
+                        onclick={resetComponent}>
+                    </lightning-button>
+                    
+                    <lightning-button
+                        label="Refresh Data"
+                        variant="brand"
+                        onclick={refreshComponent}
+                        class="slds-m-left_small">
+                    </lightning-button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Event Log -->
+        <div class="slds-card slds-m-top_large" if:true={hasEvents}>
+            <div class="slds-card__header">
+                <h3 class="slds-card__header-title">Event Log</h3>
+                <div class="slds-card__header-actions">
+                    <lightning-button
+                        label="Clear Log"
+                        variant="neutral"
+                        onclick={clearEventLog}>
+                    </lightning-button>
+                </div>
+            </div>
+            <div class="slds-card__body slds-p-horizontal_medium">
+                <template for:each={eventLog} for:item="event" for:index="index">
+                    <div key={event.id} class="event-entry slds-box slds-box_x-small slds-m-bottom_small">
+                        <div class="slds-grid">
+                            <div class="slds-col slds-size_1-of-4">
+                                <span class="slds-badge slds-badge_lightest">{event.type}</span>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <p class="slds-text-body_small">{event.message}</p>
+                            </div>
+                            <div class="slds-col slds-size_1-of-4">
+                                <p class="slds-text-body_small slds-text-color_weak">{event.timestamp}</p>
+                            </div>
+                        </div>
+                        <template if:true={event.detail}>
+                            <div class="slds-m-top_x-small">
+                                <pre class="slds-text-body_small">{event.detailString}</pre>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+    </div>
+</template>
+
+<!-- JavaScript for Advanced Example -->
+<script>
+import { LightningElement, track } from 'lwc';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+
+export default class AdvancedUsageExample extends LightningElement {
+    
+    // Component Configuration
+    @track componentTitle = 'Advanced Component Example';
+    @track showHeader = true;
+    @track showFooter = true;
+    @track showInput = true;
+    @track showActions = true;
+    @track footerText = 'This is the footer text';
+    
+    // Event Tracking
+    @track eventLog = [];
+    @track eventCounter = 0;
+    
+    // Computed Properties
+    get hasEvents() {
+        return this.eventLog.length > 0;
+    }
+    
+    // Configuration Event Handlers
+    handleTitleChange(event) {
+        this.componentTitle = event.target.value;
+        this.logEvent('Configuration', 'Title changed', { newTitle: this.componentTitle });
+    }
+    
+    handleFooterTextChange(event) {
+        this.footerText = event.target.value;
+        this.logEvent('Configuration', 'Footer text changed', { newFooterText: this.footerText });
+    }
+    
+    handleShowHeaderChange(event) {
+        this.showHeader = event.target.checked;
+        this.logEvent('Configuration', 'Show header changed', { showHeader: this.showHeader });
+    }
+    
+    handleShowFooterChange(event) {
+        this.showFooter = event.target.checked;
+        this.logEvent('Configuration', 'Show footer changed', { showFooter: this.showFooter });
+    }
+    
+    handleShowInputChange(event) {
+        this.showInput = event.target.checked;
+        this.logEvent('Configuration', 'Show input changed', { showInput: this.showInput });
+    }
+    
+    handleShowActionsChange(event) {
+        this.showActions = event.target.checked;
+        this.logEvent('Configuration', 'Show actions changed', { showActions: this.showActions });
+    }
+    
+    // Component Event Handlers
+    handleInputChange(event) {
+        const detail = event.detail;
+        this.logEvent('Input Change', 'User input changed', detail);
+        
+        // Show toast for demonstration
+        this.showToast('Input Changed', `Value: ${detail.value}, Valid: ${detail.isValid}`, 'info');
+    }
+    
+    handlePrimaryAction(event) {
+        const detail = event.detail;
+        this.logEvent('Primary Action', 'Primary action triggered', detail);
+        
+        // Show toast for demonstration
+        this.showToast('Primary Action', 'Primary action executed successfully', 'success');
+    }
+    
+    handleSecondaryAction(event) {
+        const detail = event.detail;
+        this.logEvent('Secondary Action', 'Secondary action triggered', detail);
+        
+        // Show toast for demonstration
+        this.showToast('Secondary Action', 'Secondary action executed successfully', 'info');
+    }
+    
+    handleComponentError(event) {
+        const detail = event.detail;
+        this.logEvent('Error', 'Component error occurred', detail);
+        
+        // Show error toast
+        this.showToast('Component Error', detail.message, 'error');
+    }
+    
+    // Control Actions
+    resetComponent() {
+        // Get reference to the component and call its public method
+        const component = this.template.querySelector('c-component-name');
+        if (component) {
+            component.resetComponent();
+            this.logEvent('Control', 'Component reset triggered', {});
+        }
+    }
+    
+    refreshComponent() {
+        // Get reference to the component and call its public method
+        const component = this.template.querySelector('c-component-name');
+        if (component) {
+            component.refreshData();
+            this.logEvent('Control', 'Component refresh triggered', {});
+        }
+    }
+    
+    clearEventLog() {
+        this.eventLog = [];
+        this.eventCounter = 0;
+    }
+    
+    // Utility Methods
+    logEvent(type, message, detail) {
+        this.eventCounter++;
+        const event = {
+            id: this.eventCounter,
+            type: type,
+            message: message,
+            detail: detail,
+            detailString: JSON.stringify(detail, null, 2),
+            timestamp: new Date().toLocaleTimeString()
+        };
+        
+        // Add to beginning of array for newest first
+        this.eventLog = [event, ...this.eventLog];
+        
+        // Keep only last 20 events
+        if (this.eventLog.length > 20) {
+            this.eventLog = this.eventLog.slice(0, 20);
+        }
+    }
+    
+    showToast(title, message, variant) {
+        const event = new ShowToastEvent({
+            title: title,
+            message: message,
+            variant: variant,
+            mode: 'dismissable'
+        });
+        this.dispatchEvent(event);
+    }
+}
+</script>
+
+<!-- CSS for Advanced Example -->
+<style>
+.event-entry {
+    border-left: 3px solid #0176d3;
+}
+
+.event-entry pre {
+    background-color: #f3f3f3;
+    padding: 0.5rem;
+    border-radius: 4px;
+    max-height: 100px;
+    overflow-y: auto;
+}
+</style>

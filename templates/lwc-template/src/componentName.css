@@ -1,0 +1,206 @@
+/*
+ * Template CSS file for Lightning Web Component
+ * 
+ * This file contains component-specific styling
+ * Follow SLDS guidelines and use CSS custom properties for theming
+ */
+
+/* Component Container */
+.component-container {
+    /* Use CSS custom properties for easy theming */
+    --primary-color: #0176d3;
+    --secondary-color: #f3f3f3;
+    --success-color: #4bca81;
+    --error-color: #ea001e;
+    --warning-color: #ffb75d;
+    --border-radius: 4px;
+    --spacing-small: 0.5rem;
+    --spacing-medium: 1rem;
+    --spacing-large: 1.5rem;
+    
+    /* Default container styling */
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+/* Main Content Area */
+.main-content {
+    min-height: 200px;
+}
+
+/* Data Section Styling */
+.data-section {
+    border-top: 1px solid var(--lwc-colorBorder);
+    padding-top: var(--spacing-medium);
+}
+
+.data-item {
+    border-left: 3px solid var(--primary-color);
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+.data-item:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-small);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .component-container {
+        margin: 0;
+        border-radius: 0;
+    }
+    
+    .action-buttons {
+        justify-content: center;
+        flex-direction: column;
+    }
+    
+    .action-buttons lightning-button {
+        width: 100%;
+        margin: var(--spacing-small) 0 !important;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .component-container {
+        max-width: 95%;
+    }
+}
+
+@media (min-width: 1025px) {
+    .component-container {
+        max-width: 800px;
+    }
+}
+
+/* Loading States */
+.slds-spinner_container {
+    position: relative;
+    min-height: 6rem;
+}
+
+/* Error States */
+.error-container {
+    padding: var(--spacing-medium);
+    border-radius: var(--border-radius);
+    background-color: var(--lwc-colorBackgroundError);
+    border: 1px solid var(--error-color);
+}
+
+/* Success States */
+.success-indicator {
+    color: var(--success-color);
+    font-weight: 600;
+}
+
+/* Custom Input Styling */
+.custom-input {
+    position: relative;
+}
+
+.custom-input lightning-input {
+    --slds-c-input-color-border: var(--primary-color);
+    --slds-c-input-color-border-focus: var(--primary-color);
+}
+
+/* Animation Classes */
+.fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.slide-in {
+    animation: slideIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Accessibility Improvements */
+.visually-hidden {
+    position: absolute !important;
+    margin: -1px !important;
+    border: 0 !important;
+    padding: 0 !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+    clip: rect(0 0 0 0) !important;
+    text-transform: none !important;
+    white-space: nowrap !important;
+}
+
+/* Focus Indicators */
+.custom-focus:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* High Contrast Support */
+@media (prefers-contrast: high) {
+    .data-item {
+        border-left-width: 4px;
+        border-left-color: #000;
+    }
+    
+    .component-container {
+        border: 2px solid #000;
+    }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    .fade-in,
+    .slide-in {
+        animation: none;
+    }
+    
+    .data-item {
+        transition: none;
+    }
+}
+
+/* Dark Mode Support (if applicable) */
+@media (prefers-color-scheme: dark) {
+    .component-container {
+        --primary-color: #4895d9;
+        --secondary-color: #2a2a2a;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .action-buttons {
+        display: none;
+    }
+    
+    .component-container {
+        box-shadow: none;
+        border: 1px solid #000;
+    }
+}

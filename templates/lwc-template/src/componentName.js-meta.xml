@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Template metadata file for Lightning Web Component
+    
+    Replace values with your component-specific information
+    This file defines component capabilities and exposure
+-->
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    
+    <!-- Component API Version -->
+    <apiVersion>58.0</apiVersion>
+    
+    <!-- Component Description -->
+    <description>
+        Brief description of what this component does and its purpose.
+        This description appears in the Lightning App Builder.
+    </description>
+    
+    <!-- Master Label (appears in Lightning App Builder) -->
+    <masterLabel>Component Display Name</masterLabel>
+    
+    <!-- Where the component can be used -->
+    <targets>
+        <!-- Lightning App Builder -->
+        <target>lightning__AppPage</target>
+        
+        <!-- Lightning Home Page -->
+        <target>lightning__HomePage</target>
+        
+        <!-- Lightning Record Page -->
+        <target>lightning__RecordPage</target>
+        
+        <!-- Lightning Tab -->
+        <target>lightning__Tab</target>
+        
+        <!-- Flow Screens -->
+        <target>lightningSnapin__ChatMessage</target>
+        
+        <!-- Community Builder -->
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+        
+        <!-- Utility Bar -->
+        <target>lightning__UtilityBar</target>
+        
+        <!-- Email Templates (if applicable) -->
+        <!-- <target>lightning__EmailTemplate</target> -->
+    </targets>
+    
+    <!-- Supported Form Factors -->
+    <targetConfigs>
+        
+        <!-- Desktop Configuration -->
+        <targetConfig targets="lightning__AppPage,lightning__HomePage,lightning__RecordPage">
+            <!-- Design Properties (configurable in App Builder) -->
+            
+            <!-- String Property -->
+            <property 
+                name="title" 
+                type="String" 
+                label="Component Title" 
+                description="The title displayed at the top of the component"
+                default="Default Title" />
+            
+            <!-- Boolean Property -->
+            <property 
+                name="showHeader" 
+                type="Boolean" 
+                label="Show Header" 
+                description="Whether to display the component header"
+                default="true" />
+            
+            <!-- Boolean Property -->
+            <property 
+                name="showFooter" 
+                type="Boolean" 
+                label="Show Footer" 
+                description="Whether to display the component footer"
+                default="false" />
+            
+            <!-- Integer Property -->
+            <property 
+                name="maxRecords" 
+                type="Integer" 
+                label="Maximum Records" 
+                description="Maximum number of records to display"
+                default="10"
+                min="1"
+                max="100" />
+            
+            <!-- Picklist Property -->
+            <property 
+                name="displayMode" 
+                type="String" 
+                label="Display Mode" 
+                description="How to display the component content"
+                default="card"
+                datasource="card,list,table,grid" />
+            
+            <!-- Object Property (for record context) -->
+            <property 
+                name="recordId" 
+                type="String" 
+                label="Record ID" 
+                description="The ID of the record to display (auto-populated on record pages)" />
+            
+            <!-- SObject Property -->
+            <property 
+                name="objectApiName" 
+                type="String" 
+                label="Object API Name" 
+                description="The API name of the object to work with"
+                datasource="apex://YourApexClass" />
+            
+            <!-- Rich Text Property -->
+            <property 
+                name="description" 
+                type="String" 
+                label="Description" 
+                description="Rich text description for the component" />
+            
+        </targetConfig>
+        
+        <!-- Flow Configuration -->
+        <targetConfig targets="lightning__FlowScreen">
+            <!-- Input Properties for Flow -->
+            <property 
+                name="inputValue" 
+                type="String" 
+                label="Input Value" 
+                description="Value to process in the flow" />
+            
+            <property 
+                name="isRequired" 
+                type="Boolean" 
+                label="Required Field" 
+                description="Whether this field is required in the flow"
+                default="false" />
+            
+            <!-- Output Properties for Flow -->
+            <property 
+                name="outputValue" 
+                type="String" 
+                label="Output Value" 
+                description="Value returned from the component"
+                role="outputOnly" />
+            
+        </targetConfig>
+        
+        <!-- Community Configuration -->
+        <targetConfig targets="lightningCommunity__Page,lightningCommunity__Default">
+            <!-- Community-specific properties -->
+            <property 
+                name="communityTheme" 
+                type="String" 
+                label="Community Theme" 
+                description="Theme to apply for community display"
+                default="standard"
+                datasource="standard,branded,custom" />
+                
+        </targetConfig>
+        
+    </targetConfigs>
+    
+    <!-- Capabilities -->
+    
+    <!-- Has Configuration (can be configured in App Builder) -->
+    <hasConfiguration>true</hasConfiguration>
+    
+    <!-- Support for Quip (if applicable) -->
+    <!-- <hasQuip>true</hasQuip> -->
+    
+    <!-- Lightning Platform Objects (if working with platform objects) -->
+    <!-- <objects>
+        <object>Account</object>
+        <object>Contact</object>
+        <object>CustomObject__c</object>
+    </objects> -->
+    
+    <!-- Required Lightning Platform Features -->
+    <!-- <requirementsByPlatform>
+        <lightning>
+            <requires>CustomPermissions</requires>
+            <requires>FieldSets</requires>
+        </lightning>
+    </requirementsByPlatform> -->
+    
+</LightningComponentBundle>
