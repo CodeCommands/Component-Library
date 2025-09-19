@@ -15,7 +15,7 @@
 
 | Component | Description | Tags | Complexity | Last Updated |
 |-----------|-------------|------|------------|--------------|
-| *No components yet* | *Add your UI components here* | | | |
+| [Case Comments Chat UI](components/lwc/ui-components/case-comments-chat-ui/) | Modern chat-style interface for Case Comments with WhatsApp-like conversation view | `#chat` `#case-comments` `#conversation` `#ui-enhancement` | Intermediate | 2025-09-19 |
 
 **Example Entry Format:**
 | Enhanced Data Table | Sortable, filterable data table with export functionality | `#table` `#responsive` `#export` | Intermediate | 2025-09-19 |
@@ -89,7 +89,7 @@
 
 | Flow | Description | Tags | Complexity | Last Updated |
 |------|-------------|------|------------|--------------|
-| *No flows yet* | *Add your automation flows here* | | | |
+| [Concurrent Session Restriction](components/flows/automation/concurrent-session-restriction/) | Prevents users from having multiple active sessions by terminating existing sessions during login | `#security` `#session-management` `#login-flow` | Intermediate | 2025-09-19 |
 
 **Example Entry Format:**
 | Account Data Sync | Syncs account data with external CRM system | `#sync` `#integration` `#scheduled` | Advanced | 2025-09-19 |
@@ -186,23 +186,24 @@
 ### Most Popular Components
 *Updated monthly based on deployment and usage data*
 
-1. **Component Name** - Used in X projects
-2. **Component Name** - Used in X projects
-3. **Component Name** - Used in X projects
+1. **Case Comments Chat UI** - Used in Customer Service projects
+2. **Concurrent Session Restriction** - Used in Security/Login implementations
+3. *More components as they're added*
 
 ### Recently Added
 *Latest additions to the component library*
 
 | Component | Type | Added Date | Added By |
 |-----------|------|------------|----------|
-| *No recent additions* | | | |
+| Case Comments Chat UI | LWC | 2025-09-19 | Customer Service Platform Team |
+| Concurrent Session Restriction | Flow | 2025-09-19 | Security/Platform Team |
 
 ### Most Requested Features
 *Based on feedback and feature requests*
 
-1. **Feature Name** - Requested by X teams
-2. **Feature Name** - Requested by X teams
-3. **Feature Name** - Requested by X teams
+1. **Chat Interface Components** - ✅ Delivered (Case Comments Chat UI)
+2. **Session Security Controls** - ✅ Delivered (Concurrent Session Restriction)
+3. **Data Export Components** - In planning
 
 ---
 
@@ -274,6 +275,6 @@ Example Searches:
 ---
 
 **Catalog Last Updated**: September 19, 2025  
-**Total Components**: 0 LWCs, 0 Flows  
-**Contributors**: 0 teams  
+**Total Components**: 1 LWC, 1 Flow  
+**Contributors**: 2 teams  
 **Maintained By**: Salesforce Technical Architecture Team
